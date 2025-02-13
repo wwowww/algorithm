@@ -150,7 +150,7 @@ arr[2] // 30
 
 |           | 배열(정적) | 동적 배열 |
 | --------- | --------- | --------- |
-| 크기 유연성   |고정, 선언시 결정된 크기 변경 불가 | 실행 중 크기 변경 가능, 자동 확장/축소 |
+| 크기 유연성  | 고정, 선언시 결정된 크기 변경 불가 | 실행 중 크기 변경 가능, 자동 확장/축소 |
 | 메모리 할당 | 컴파일 타임에 할당 | 런타임에 할당 |
 | 성능       | 연송적인 메모리를 활용 빠른 읽기/쓰기 | 크기 변경 시 오버헤드 발생 가능 |
 | 재할당/복사 | 수동으로 새 배열을 만들거나 덮어쓰기 | 필요에 따라 자동으로 조정 |
@@ -222,7 +222,7 @@ cart.unshift("kiwi") // 배열 맨 앞에 삽입
 - push: 맨 뒤의 요소를 제거하기 때문에 일정한 시간
 - unshift: 모든 요소들을 오른쪽으로 한 칸씩 이동시키고, 삽입하기 때문에 배열의 사이즈에 비례하는 시간이 걸림
 
-### 4. 삭제(선형 시간)
+#### 4. 삭제(선형 시간)
 ```js
 cart.pop() // 배열의 마지막 요소 제거
 cart.shift() // 배열 첫번쨰 요소 제거
@@ -325,11 +325,89 @@ console.log(queue) // [20, 30]
 dequeue가 배열을 사용할 경우 선형시간이 될 수 있고 연결 리스트는 상수 시간으로 dequeue 작업을 수행할 수 있음
 
 ## 7. 연결 리스트(Linked List)
-- 연속된 노드의 연결체
+- 연속된 노드의 연결체(체인처럼 연결됨)
 - Node란?
-  - 연결 리스트에서 사용되는 하나의 데이터 덩어리, 노드 안에는 데이터와 필드가 있음
+  - 연결 리스트에서 사용되는 하나의 데이터 덩어리,
+  - 노드 안에는 2가지 -> 데이터와 필드가 있음
+
+<img src="https://github.com/user-attachments/assets/ee3d7bdb-f5fe-4714-8eb3-f2e653cb1b00" alt="" width="200" />
+
+- data: 노드가 담고 있는 데이터/값
+- next: 링크/포인터 역활, 다음 노드 주소를 저장
+- 양방향 연결 리스트의 경우, prev 포인터(이전 노드 주소 참조 필드) 추가
+
+### 연결 리스트의 구조
+
+- 시작 지점에 있는 노드를 head
+- 마지막 노드를 tail 노트라고 부름
+
+<img src="https://github.com/user-attachments/assets/efc4d5d6-16e7-4f38-b01a-8f1d72fcadce" alt="" width="500" />
 
 
+### 배열 vs 연결 리스트
+
+- 하나의 노드들이 각자 메모리공간 어딘가에 불특정한 공간에 존재하기 때문에 pointer를 활용해서 연결시켜줘야함
+- 때문에 선형 시간이 걸림
+- c노드를 가고 싶으면 a, b를 거쳐야 가능
+
+<img src="https://github.com/user-attachments/assets/12a7e9c3-d5ad-469f-8e10-410fac1bee56" alt="" width="700" />
+
+
+
+#### 배열
+- random access가 가능
+- 배열의 n번째 원소 방문 시 O(1) 시간으로 방문 가능
+  - 예: arr[3]
+- 원소 삽입 & 삭제는 일반적으로 O(n) 시간 소요
+
+#### 연결 리스트
+- random access 불가능
+- 리스트의 n번째 노드 방문 시 O(n) 시간 소요
+  - 예: head 노드부터 n번째 노드까지 순회
+- 배열보다 빨라질 수 있는 노드 삽입, 삭제
+  - 연결 리스트의 노드를 맨 앞에 삽입시켜줄 때는 **헤드 노드의 참조 위치만 바뀌기 때문**에 상수 시간이라 빠른 속도로 처리 가능
+
+
+### 연결리스트 종류
+
+#### 1. 단일 연결 리스트(Singly Linked List)
+- 다음 노드에 대한 포인터만 가지고 있고, 한 쪽 방향으로만 흐르는 데이터 구조 패턴
+
+<img src="https://github.com/user-attachments/assets/e85aa3c8-56df-42e7-8d47-953460650d9c" alt="" width="600" />
+
+#### 2. 이중 연결 리스트(Doubly Linked List)
+- 다음 노드에 대한 포인터 뿐만아니라 이전 노드를 가리키는 포인터도 가지고 있음
+- 앞, 뒤로 탐색이 빠르다는 장점이 있지만
+- 2개의 포인터를 관리해줘야 하기 때문에 데이터의 구조와 흐름이 복잡해질 수 있음
+
+<img src="https://github.com/user-attachments/assets/f31e1b3a-436c-40c8-9797-62d6bc24f088" alt="" width="600" />
+
+
+#### 3. 원형 연결 리스트(Circular Linked List)
+- 일반적인 연결 리스트에 마지막 노드가 가리키는 포인터가 헤드 노드를 가리키는 것
+
+<img src="https://github.com/user-attachments/assets/4987e613-43f4-4a21-bffd-19eb27b41353" alt="" width="460" />
+
+### 구현 방법
+#### 1. 노드 구현 방법
+```js
+class Node {
+  constructor(data) {
+    this.data = data; // 데이터 필드
+    this.next = null; // 링크 역할을 해주는 next 필드
+  }
+}
+```
+
+#### 2. 연결 리스트
+```js
+let head = new Node("a");
+head.next = new Node("b");
+head.next.next = new Node("c");
+head.next.next.next = new Node("d");
+```
+
+<img src="https://github.com/user-attachments/assets/868e34dc-b7c7-4c20-9bd5-d9c9d4521c07" alt="" width="700" />
 
 
 <br><br>
