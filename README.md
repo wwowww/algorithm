@@ -409,6 +409,149 @@ head.next.next.next = new Node("d");
 
 <img src="https://github.com/user-attachments/assets/868e34dc-b7c7-4c20-9bd5-d9c9d4521c07" alt="" width="700" />
 
+## 8. 트리(Tree)
+
+- 노드의 앞-뒤 관계가 1:N 또는 N:N
+- 비선형 계층적 구조
+- 다수의 노드가 연결된 비선형 자료 구조
+- `부모-자식`의 계층 구조를 가지고 있다
+
+#### 참고: 선형 자료 구조
+  - 배열, 연결리스트, 스택, 큐
+  - 노드/원소의 앞-뒤 관계가 1:1인 구조
+
+
+<img src="https://github.com/user-attachments/assets/888737f9-f6bc-48b8-8ad7-23db4852c1a1" alt="" width="500">
+
+- `root노드`가 존재하고, 하위의 노드들을 `자식 노드`라고 하고, 이어주는 것: `edge`라 함
+- 자식 노드는 또 자식 노드를 가질 수 있고, 맨 마지막 자식 노드를 `leaf 노드`라 함
+
+### 트리 구현하기
+
+```js
+class TreeNode {
+  constructor(data) {
+    this.data = data;
+    this.children = [];
+  }
+  addChildren(childNode) {
+    this.children.push(childNode)
+  }
+}
+
+const root = new TreeNode("A");
+const node2 = new TreeNode("B");
+const node3 = new TreeNode("C");
+
+root.addChild(node2);
+root.addChild(node3);
+```
+
+- 각 node는 하나의 객체로 표현됨
+- node에 데이터와 자식 노드들을 저장할 수 있음
+
+### 용어 설명
+
+#### sub tree
+- 노란 삼각형: 트리의 sub tree라고 함
+- 하나의 트리는 다수의 sub tree로 구성되어 있다고 볼 수 있음
+- sub tree 내에서 상위 노드를 부모, 하위 노드를 자식 노드라고 표현
+
+<img src="https://github.com/user-attachments/assets/ce52d54b-3f7e-46f4-a46b-b79e7bcfe005" alt="" width="400">
+
+#### sibling
+- 같은 부모를 가지고 있는 노드를 sibling(형제)라고 표현
+<img src="https://github.com/user-attachments/assets/4ed3b359-f4d6-47ec-bc39-78902fb22938" alt="" width="400">
+
+#### size
+- root를 포함한 모든 Node의 수
+- 위 사진에서 노드의 개수는 7
+
+#### depth(깊이)
+- Node에서 root까지의 거리
+- root node: 깊이 0
+- 그다음 자식노드: 깊이 1
+- ...
+
+#### 높이(height)
+- root 노드를 기준으로 가장 깊숙히 위치한 노트까지 도착할 때 필요한 edge 개수
+
+
+### 이진 트리(Binary tree)
+- 자식 노드가 최대 2개로 제한
+- 자식이 있어도, 없어도 최대 2개만 넘지 않으면 됨
+
+### 이진 탐색 트리(Binary search tree)
+- 왼쪽 자식 노드 값 < 부모 노드 값
+- 부모 노드 값 < 오른쪽 자식 노드 값
+
+<img src="https://github.com/user-attachments/assets/4036c30f-6a29-4695-9a47-8351a2fcc5ec" alt="" width="500">
+
+
+### 트리 순회
+
+#### in-order traversal (중위 순회)
+- left -> visit -> right
+- DFS(깊이 우선 탐색)를 사용해 순회
+- a -> b -> d 방문처리(출력) -> b(출력) -> e(출력) -> b -> a(출력) -> c -> f(출력) -> c(출력) -> g(출력) -> c(출력) => 왼쪽 자식 노드가 없으면 출력
+- ⭐️ 출력 순서: `d -> b -> e -> a -> f -> c -> g`
+
+```js
+function inOrderTraversal(node) {
+  if(node !== null) {
+    inOrderTraversal(node.left);
+    console.log(node.value);
+    inOrderTraversal(node.right)
+  }
+}
+```
+1. 왼쪽 sub tree 순회
+2. node 방문
+3. 오른쪽 sub tree 순회
+
+<img src="https://github.com/user-attachments/assets/94162a91-99d4-4a38-b5d5-784014928859" alt="" width="300" >
+
+#### pre-order traversal (전위 순회)
+- visit -> left -> right
+- a(방문) -> b(방문) -> d(방문) -> b -> e(출력) -> a -> c(출력) -> f(출력) -> c -> g(출력) -> c -> a 
+- ⭐️ 출력 순서: `a -> b -> d -> e -> c -> f -> g`
+
+```js
+function preOrderTraversal(node) {
+  if (node !== null) {
+    console.log(node.value);
+    preOrderTraversal(node.left);
+    preOrderTraversal(node.right);
+  }
+}
+```
+1. node 방문
+2. 왼쪽 sub tree 순회
+3. 오른쪽 sub tree 순회
+
+#### post-order traversal(후위 순회)
+- left -> right -> visit
+- ⭐️ 출력 순서: `d -> e -> b -> f -> g -> c -> a`
+
+```js
+function postOrderTraversal(node) {
+  if (node !== null) {
+    postOrderTraversal(node.left);
+    postOrderTraversal(node.right);
+    console.log(node.value);
+  }
+}
+```
+1. 왼쪽 sub tree 순회
+2. 오른쪽 sub tree 순회
+3. node 방문
+
+
+
+## 9. 힙(Heap)
+- 이진트리를 기반으로 한 자료구조
+
+
 
 <br><br>
 
