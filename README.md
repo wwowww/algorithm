@@ -547,9 +547,105 @@ function postOrderTraversal(node) {
 3. node 방문
 
 
-
 ## 9. 힙(Heap)
 - 이진트리를 기반으로 한 자료구조
+- 부모 노드와 자식 노드간의 대소 관계로 힙의 종류가 나뉘어짐
+  - 최대 힙: `부모노드 > 자식노드` 항상 부모노드가 큰 힙
+  - 최소 힙: `부모노드 < 자식노드` 항상 자식노드가 큰 힙
+- 가장 높은 또는 낮은 키 값이 항상 root 노드에 오게 되는 특징이 있음 -> 이를 활용해 우선순위 큐라는 추상적 자료형을 구현할 때 힙을 사용
+  - 우선순위 큐(priority queue): 추상형 자료 타입(ADT), 우선 순위 큐를 구현할 때 사용되는 자료구조
+    - 효율적인 삽입과 O(1)의 우선 순위 요소 접근
+
+### Max heap & Min heap
+
+#### Max heap
+root 노드가 인덱스 0에 위치할 경우
+- left: i * 2 + 1
+- right: i * 2 + 2
+- parent: (i - 1) / 2
+
+```js
+class MaxHeap {
+  constructor() {
+    this.heap = [];
+  }
+  insert(value) {
+    this.heap.push(value);
+    this.heapifyUp(); // 힙 재구성 메서드 호출
+  }
+}
+```
+
+- `Heapify(힙의 재구조화)`: 수행과정에서 생길수도 있는 구조의 변화로 인해 힙의 속성이 깨질 수 있기 때문에 삽입/삭제 시 힙의 재구조화가 요구된다.
+- Heapify Up(버블 업)
+  1. 현재 노드의 인덱스를 구한다
+  2. 현재 노드가 부모 노드의 인덱스를 구한다
+  3. 현재 노드가 부모 노드보다 크다면 두 노드를 바꾼다
+  4. 현재 노드가 인덱스를 부모 노드의 인덱스로 바꾼다
+  5. 현재 노드의 부모 노드의 인덱스를 구한다
+
+```js
+...
+  heapifyUp (index) {
+    let currentIndex = index || this.heap. length - 1;
+    let parentIndex = Math. floor ((currentIndex - 1) / 2);
+
+    while (this.heap(parentIndex) < this.heap[currentIndex]) ‹
+      this.swap (parentIndex, currentIndex)
+      currentIndex = parentIndex;
+      parentIndex = Math. floor ((currentIndex - 1) / 2) ;
+    ｝
+  }
+...
+```
+
+#### 힙의 삭제 연산
+- 삽입의 반대
+- 현재 힙의 최대 값을 삭제하고 반환을 하는 작업을 delete를 통해서
+
+```js
+delete() {
+  const max = this.heap[0];
+  const last = this.heap.pop();
+  if (this.heap.length > 0) {
+    this.heap[0] = last;
+    this.heapifyDown();
+  }
+}
+```
+- Heapify Down(버블 다운)
+  1. 좌측 자식 > 현재 요소: 다음 인덱스를 좌측 자식 인덱스로 설정
+  2. 우측 자식 > 현재 요소: 다음 인덱스를 우측 자식 인덱스로 설정
+  3. 다음 인덱스 !== 현재 인덱스: 현재 요소와 다음 요소를 교환하고 다음 인덱스를 기준으로 다시 `heapifyDown` 호출
+
+```js
+heapifyDown (index = 0) {
+  let currentIndex = index;
+  let leftChildIndex = currentIndex * 2 + 1;
+  let rightChildIndex = currentIndex * 2 + 2;
+  let nextIndex = currentIndex;
+
+  if (this.heap[nextIndex] < this.heap[leftChildIndex]) {
+    nextIndex = leftChildIndex;
+  ｝
+  if (this.heap[nextIndex] < this.heap[rightChildIndex]) {
+    nextIndex = rightChildIndex;
+  }
+  if (nextIndex !== currentIndex) {
+    this.swap(currentIndex, nextIndex);
+    this.maxHeapifyDown(nextIndex);
+  }
+}
+```
+
+#### 삽입/삭제 시간 복잡도
+- 삭제 및 삽입 연산의 시간 복잡도는 힙의 높이에 의해 결정
+- 힙의 높이는 log n에 비례하므로 O(log n)
+
+#### 힙의 주요 메서드
+- peek(): 최대/최소 값 리턴
+- size(): 힙 사이즈 리턴
+- isEmpty(): 힙 사이즈 0 체크
 
 
 
