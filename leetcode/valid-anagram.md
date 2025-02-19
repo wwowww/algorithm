@@ -29,3 +29,18 @@ var isAnagram = function(s, t) {
     return s.split("").sort().join("") === t.split("").sort().join("");
 };
 ```
+
+## 다른사람풀이
+시간복잡도
+- 내 풀이는 O(n log n)
+- 아래 코드는 O(n)
+```js
+var isAnagram = function(s, t) {
+    if(s.length !== t.length) return false;
+    const buildStr = str => str.split("").reduce((acc,cur,index)=>{
+        acc[cur.charCodeAt() - 97]++
+        return acc
+    }, Array.from({length:26}).fill(0)).toString()
+    return buildStr(s) === buildStr(t)
+};
+```
